@@ -1,6 +1,7 @@
 
+import * as JSC from "jscharting";
 import { M } from "./js/model.js";
-
+import { V } from "./js/view.js";
 /*
    Ce fichier correspond au contrôleur de l'application. Il est chargé de faire le lien entre le modèle et la vue.
    Le modèle et la vue sont définis dans les fichiers js/model.js et js/view.js et importés (M et V, parties "publiques") dans ce fichier.
@@ -17,8 +18,8 @@ import { M } from "./js/model.js";
 // loadind data (and wait for it !)
 await M.init();
 
-console.log(...M.getEvents("mmi1"));
-
+let p = [...M.getEvents("mmi1")];
+console.log(p[0])
 // let index = {}
 
 // let key = ['fruit','vegetable'];
@@ -28,17 +29,49 @@ console.log(...M.getEvents("mmi1"));
 //         return item.type === k;
 //     });
 // }
+let events = M.getEvents("mmi1");
 
+let hoursPerWeek = {};
 
-// Retourne la numéro de la semaine
-function getWeekNumber(uneDate) {
-    var d = new Date(uneDate);
-    var DoW = d.getDay();
-    d.setDate(d.getDate() - (DoW + 6) % 7 + 3); // Nearest Thu
-    var ms = d.valueOf(); // GMT
-    d.setMonth(0);
-    d.setDate(4); // Thu in Week 1
-    return Math.round((ms - d.valueOf()) / (7 * 864e5)) + 1;
+// Ajoutez les heures d'événements à l'objet
+for (let event of events) {
+    if (!hoursPerWeek[event.week]) {
+        hoursPerWeek[event.week] = 0;
+    }
+
+    let durationMilliseconds = event.end - event.start;
+    let durationHours = Math.floor(durationMilliseconds / (1000 * 60 * 60));
+
+    hoursPerWeek[event.week] += durationHours;
 }
 
-console.log(getWeekNumber("02/28/2020"));
+// Créez les points pour le graphique
+let chartPoints = Object.keys(hoursPerWeek).map(week => {
+    return {
+        name: week,
+        y: hoursPerWeek[week]
+    };
+});
+
+var chart = JSC.chart('chartDiv', {
+    debug: false,
+    defaultSeries_type: 'columnSolid',
+    title_label_text: 'Heures de cours par semaine en MMI',
+    yAxis: {
+        defaultTick_enabled: true,
+        scale_range_padding: 0.15
+    },
+    legend_visible: false,
+    toolbar_visible: false,
+    series: [
+        {
+            name: 'Heures de cours',
+            color: 'turquoise',
+            defaultPoint: {
+                label: { text: '%value' }
+            },
+
+            points: chartPoints
+        }
+    ]
+});
