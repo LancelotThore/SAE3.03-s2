@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@toast-ui/calendar": "^2.1.3",
-    "ical": "^0.8.0"
+    "ical": "^0.8.0",
+    "jscharting": "^3.4.0"
   }
 }
