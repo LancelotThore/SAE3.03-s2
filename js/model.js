@@ -1,4 +1,3 @@
-
 import ical from 'ical';
 import { EventManager } from './class/event-manager';
 
