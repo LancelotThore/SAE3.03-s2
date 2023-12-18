@@ -1,19 +1,18 @@
 {
-  "name": "sae3.03-sprint2",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
+  "name": "mmi-calendar",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/LancelotThore/SAE3.03.git"
+  "devDependencies": {
+    "vite": "^5.0.0"
   },
-  "author": "Nolan DUTHIL, Lancelot THORE",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/LancelotThore/SAE3.03/issues"
-  },
-  "homepage": "https://github.com/LancelotThore/SAE3.03#readme"
+  "dependencies": {
+    "@toast-ui/calendar": "^2.1.3",
+    "ical": "^0.8.0"
+  }
 }
