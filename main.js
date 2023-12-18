@@ -28,3 +28,17 @@ console.log(...M.getEvents("mmi1"));
 //         return item.type === k;
 //     });
 // }
+
+
+// Retourne la numéro de la semaine
+function getWeekNumber(uneDate) {
+    var d = new Date(uneDate);
+    var DoW = d.getDay();
+    d.setDate(d.getDate() - (DoW + 6) % 7 + 3); // Nearest Thu
+    var ms = d.valueOf(); // GMT
+    d.setMonth(0);
+    d.setDate(4); // Thu in Week 1
+    return Math.round((ms - d.valueOf()) / (7 * 864e5)) + 1;
+}
+
+console.log(getWeekNumber("02/28/2020"));
