@@ -1,6 +1,5 @@
 
 import { M } from "./js/model.js";
-import { V } from "./js/view.js";
 
 /*
    Ce fichier correspond au contrôleur de l'application. Il est chargé de faire le lien entre le modèle et la vue.
@@ -14,7 +13,18 @@ import { V } from "./js/view.js";
 
    Exception : Afficher 1, 2 ou les 3 années de formation sans autre filtrage peut être géré uniquement au niveau de la vue.
 */
-console.log(M.getEvents(mmi1));
 
 // loadind data (and wait for it !)
 await M.init();
+
+console.log(...M.getEvents("mmi1"));
+
+// let index = {}
+
+// let key = ['fruit','vegetable'];
+
+// for (let k of key) {
+//     index[k] = product.filter((item) => {
+//         return item.type === k;
+//     });
+// }
