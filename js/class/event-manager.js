@@ -54,6 +54,7 @@ class EventManager {
             obj.week = event.week;
             obj.groups = event.groups;
             obj.duree = event.duree;
+            obj.semestre = event.semestre;
             return obj;
         });
     }

@@ -30,6 +30,8 @@ let all = [...M.getEvents("mmi1"), ...M.getEvents("mmi2"), ...M.getEvents("mmi3"
 //     });
 // }
 
+console.log(all)
+
 function renderTimes(events) {
     let weeklyHours = {};
     for (let event of events) {
@@ -64,7 +66,7 @@ function renderTimes(events) {
         },
         title_label_text: 'Heures par semaine',
         xAxis: {
-            label_text: 'Semaine',
+            label_text: 'Semaines',
             categories: Object.keys(weeklyHours)
         },
         series: [

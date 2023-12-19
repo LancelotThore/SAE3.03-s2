@@ -9,6 +9,7 @@ class Event {
     #week;
     #type;
     #duree;
+    #semestre;
 
     constructor(id, summary, description, start, end, location) {
         this.#id = id;
@@ -37,6 +38,8 @@ class Event {
         else {
             this.#type = "Autre";
         }
+
+        this.#semestre = this.getSemester(summary);
     }
 
     get id() {
@@ -75,6 +78,10 @@ class Event {
         return this.#duree;
     }
 
+    get semestre() {
+        return this.#semestre;
+    }
+
     // retourne un objet contenant les informations de l'événement
     // dans un format compatible avec Toast UI Calendar (voir https://nhn.github.io/tui.calendar/latest/EventObject)
     toObject() {
@@ -105,6 +112,19 @@ class Event {
         let totalMinutes = diff / (1000 * 60);
         let hoursDecimal = totalMinutes / 60;
         return hoursDecimal;
+    }
+
+    getSemester = function (title) {
+        let regexp = /^(R|(SA))[EÉ ]{0,2}[1-6](\.Crea)?(\.DWeb-DI)?\.[0-9]{2}/;
+        let res = title.match(regexp);
+
+        if (res != null) {
+            let digit = res[0].match(/[1-6]{1}/);
+            if (digit != null)
+                return digit[0];
+        }
+
+        return -1;
     }
 }
 
