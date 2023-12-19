@@ -55,6 +55,17 @@ class EventManager {
             return obj;
         });
     }
+
+    filterEvents(value) {
+        let res;
+        res = this.#events.filter(event => event.groups.includes(value));
+
+        return res.map(event => {
+            let obj = event.toObject();
+            obj.calendarId = this.#id;
+            return obj;
+        });
+    }
 }
 
 export { EventManager };
