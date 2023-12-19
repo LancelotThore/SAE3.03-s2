@@ -75,7 +75,7 @@ var chart = JSC.chart('chartDiv', {
             name: 'Heures de cours total',
             color: 'turquoise',
             defaultPoint: {
-                label: { text: '%value' }
+                label: { text: '%value h' }
             },
             points: chartData
         }
