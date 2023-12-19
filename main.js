@@ -37,25 +37,19 @@ function renderTimes(events) {
             console.log(event);
             continue;
         }
-
         if (!weeklyHours[event.week]) {
             weeklyHours[event.week] = { CM: 0, TD: 0, TP: 0, Autre: 0 };
         }
-
         let durationTotalHours = event.duree;
-
         if (event.type === 'CM') {
             weeklyHours[event.week].CM += durationTotalHours;
         }
-
         if (event.type === 'TD') {
             weeklyHours[event.week].TD += durationTotalHours;
         }
-
         if (event.type === 'TP') {
             weeklyHours[event.week].TP += durationTotalHours;
         }
-
         if (event.type === 'Autre') {
             weeklyHours[event.week].Autre += durationTotalHours;
         }
