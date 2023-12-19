@@ -18,22 +18,13 @@ import { V } from "./js/view.js";
 // loadind data (and wait for it !)
 await M.init();
 
-let p = [...M.getEvents("mmi1")];
-console.log(p[0])
-// let index = {}
-
-// let key = ['fruit','vegetable'];
-
-// for (let k of key) {
-//     index[k] = product.filter((item) => {
-//         return item.type === k;
-//     });
-// }
-let events = M.getEvents("mmi1");
+let events = [...M.getEvents("mmi1"), ...M.getEvents("mmi2"), ...M.getEvents("mmi3")];
+console.log(events)
 
 let hoursPerWeek = {};
 
 for (let event of events) {
+
     if (!hoursPerWeek[event.week]) {
         hoursPerWeek[event.week] = { hours: 0, minutes: 0 };
     }
@@ -45,7 +36,6 @@ for (let event of events) {
     hoursPerWeek[event.week].hours += durationHours;
     hoursPerWeek[event.week].minutes += durationMinutes;
 
-    // Convertir les minutes excédentaires en heures si nécessaire
     if (hoursPerWeek[event.week].minutes >= 60) {
         let extraHours = Math.floor(hoursPerWeek[event.week].minutes / 60);
         hoursPerWeek[event.week].hours += extraHours;
@@ -53,13 +43,11 @@ for (let event of events) {
     }
 }
 
-// Convertir les objets hoursPerWeek en tableau pour l'affichage
 let chartData = Object.keys(hoursPerWeek).map(week => ({
-    name: week.toString(), // Convertir le numéro de semaine en chaîne pour le nom
-    y: hoursPerWeek[week].hours + (hoursPerWeek[week].minutes / 60) // Convertir les minutes en heures et les ajouter
+    name: week.toString(),
+    y: hoursPerWeek[week].hours + (hoursPerWeek[week].minutes / 60)
 }));
 
-// Le reste du code pour l'affichage du graphique reste inchangé
 var chart = JSC.chart('chartDiv', {
     debug: false,
     defaultSeries_type: 'columnSolid',
