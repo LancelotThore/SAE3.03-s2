@@ -10,6 +10,7 @@ class Event {
     #type;
     #duree;
     #semestre;
+    #category;
 
     constructor(id, summary, description, start, end, location) {
         this.#id = id;
@@ -40,6 +41,7 @@ class Event {
         }
 
         this.#semestre = this.getSemester(summary);
+        this.#category = this.getCategory(summary);
     }
 
     get id() {
@@ -82,6 +84,10 @@ class Event {
         return this.#semestre;
     }
 
+    get category() {
+        return this.#category;
+    }
+
     // retourne un objet contenant les informations de l'événement
     // dans un format compatible avec Toast UI Calendar (voir https://nhn.github.io/tui.calendar/latest/EventObject)
     toObject() {
@@ -94,7 +100,9 @@ class Event {
             location: this.#location,
             type: this.#type,
             week: this.#week,
-            duree: this.#duree
+            duree: this.#duree,
+            semestre: this.#semestre,
+            category: this.#category
         }
     }
 
@@ -126,6 +134,20 @@ class Event {
 
         return -1;
     }
+
+    getCategory = function (title) {
+        let regexp = /^(R|(SAÉ?))[EÉ ]{0,2}([1-6]\.[0-9]{2})/;
+        let res = title.match(regexp);
+    
+        if (res != null) {
+            if (res[1]) {
+                return "Ressource";
+            } else if (res[2]) {
+                return "SAE";
+            }
+        }
+        return -1;
+    }       
 }
 
 export { Event };
