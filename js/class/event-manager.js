@@ -53,6 +53,7 @@ class EventManager {
             obj.calendarId = this.#id;
             obj.week = event.week;
             obj.groups = event.groups;
+            obj.duree = event.duree;
             return obj;
         });
     }

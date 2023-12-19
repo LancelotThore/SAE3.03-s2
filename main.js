@@ -1,7 +1,7 @@
 import * as JSC from "jscharting";
 import { M } from "./js/model.js";
 import { V } from "./js/view.js";
-import { render } from "sass";
+
 /*
    Ce fichier correspond au contrôleur de l'application. Il est chargé de faire le lien entre le modèle et la vue.
    Le modèle et la vue sont définis dans les fichiers js/model.js et js/view.js et importés (M et V, parties "publiques") dans ce fichier.
@@ -33,25 +33,29 @@ let all = [...M.getEvents("mmi1"), ...M.getEvents("mmi2"), ...M.getEvents("mmi3"
 function renderTimes(events) {
     let weeklyHours = {};
     for (let event of events) {
-        if (event.week==undefined) console.log(event);
-        if (weeklyHours[event.week]==undefined) {
+        if (event.week === undefined) {
+            console.log(event);
+            continue;
+        }
+
+        if (!weeklyHours[event.week]) {
             weeklyHours[event.week] = { CM: 0, TD: 0, TP: 0, Autre: 0 };
         }
-    
-        let durationMilliseconds = event.end - event.start;
-        let durationHours = Math.floor(durationMilliseconds / (1000 * 60 * 60));
-        let durationMinutes = Math.floor((durationMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
-        let durationTotalHours = durationHours + (durationMinutes / 60);
-    
+
+        let durationTotalHours = event.duree;
+
         if (event.type === 'CM') {
             weeklyHours[event.week].CM += durationTotalHours;
         }
+
         if (event.type === 'TD') {
             weeklyHours[event.week].TD += durationTotalHours;
         }
+
         if (event.type === 'TP') {
             weeklyHours[event.week].TP += durationTotalHours;
         }
+
         if (event.type === 'Autre') {
             weeklyHours[event.week].Autre += durationTotalHours;
         }

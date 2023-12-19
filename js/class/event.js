@@ -8,6 +8,7 @@ class Event {
     #groups;
     #week;
     #type;
+    #duree;
 
     constructor(id, summary, description, start, end, location) {
         this.#id = id;
@@ -17,19 +18,20 @@ class Event {
         this.#end = new Date(end);
         this.#location = location;
 
-        this.#groups = summary.slice(summary.lastIndexOf(',')+1);
+        this.#groups = summary.slice(summary.lastIndexOf(',') + 1);
         this.#groups = this.#groups.split('.');
-        this.#groups = this.#groups.map( gr => gr.replace(/\s/g, "") );
+        this.#groups = this.#groups.map(gr => gr.replace(/\s/g, ""));
 
         this.#week = this.calculateWeek();
+        this.#duree = this.calculateDuree();
 
-        if(this.#summary.includes("CM")) {
+        if (this.#summary.includes("CM")) {
             this.#type = "CM";
         }
-        else if(this.#summary.includes("TD")) {
+        else if (this.#summary.includes("TD")) {
             this.#type = "TD";
         }
-        else if(this.#summary.includes("TP")) {
+        else if (this.#summary.includes("TP")) {
             this.#type = "TP";
         }
         else {
@@ -62,11 +64,15 @@ class Event {
     }
 
     get groups() {
-        return this.#groups.map( gr => gr); // retourne une copie du tableau
+        return this.#groups.map(gr => gr); // retourne une copie du tableau
     }
 
     get week() {
         return this.#week;
+    }
+
+    get duree() {
+        return this.#duree;
     }
 
     // retourne un objet contenant les informations de l'événement
@@ -80,7 +86,8 @@ class Event {
             end: this.#end,
             location: this.#location,
             type: this.#type,
-            week: this.week
+            week: this.#week,
+            duree: this.#duree
         }
     }
 
@@ -92,6 +99,13 @@ class Event {
         return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000
             - 3 + (week1.getDay() + 6) % 7) / 7);
     }
+
+    calculateDuree() {
+        let diff = this.#end.getTime() - this.#start.getTime();
+        let totalMinutes = diff / (1000 * 60);
+        let hoursDecimal = totalMinutes / 60;
+        return hoursDecimal;
+    }
 }
 
-export {Event};
+export { Event };
