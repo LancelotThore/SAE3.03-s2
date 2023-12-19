@@ -7,6 +7,7 @@ class Event {
     #location;
     #groups;
     #week;
+    #type;
 
     constructor(id, summary, description, start, end, location) {
         this.#id = id;
@@ -21,6 +22,19 @@ class Event {
         this.#groups = this.#groups.map( gr => gr.replace(/\s/g, "") );
 
         this.#week = this.calculateWeek();
+
+        if(this.#summary.includes("CM")) {
+            this.#type = "CM";
+        }
+        else if(this.#summary.includes("TD")) {
+            this.#type = "TD";
+        }
+        else if(this.#summary.includes("TP")) {
+            this.#type = "TP";
+        }
+        else {
+            this.#type = "Autre";
+        }
     }
 
     get id() {
@@ -64,7 +78,8 @@ class Event {
             body: this.#description,
             start: this.#start,
             end: this.#end,
-            location: this.#location 
+            location: this.#location,
+            type: this.#type
         }
     }
 

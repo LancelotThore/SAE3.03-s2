@@ -19,7 +19,7 @@ import { V } from "./js/view.js";
 await M.init();
 
 let p = [...M.getEvents("mmi1")];
-console.log(p[0])
+
 // let index = {}
 
 // let key = ['fruit','vegetable'];
@@ -31,53 +31,63 @@ console.log(p[0])
 // }
 let events = M.getEvents("mmi1");
 
-let hoursPerWeek = {};
+let weeklyHours = {};
 
 for (let event of events) {
-    if (!hoursPerWeek[event.week]) {
-        hoursPerWeek[event.week] = { hours: 0, minutes: 0 };
+    if (!weeklyHours[event.week]) {
+        weeklyHours[event.week] = { CM: 0, TD: 0, TP: 0, Autre: 0 };
     }
 
     let durationMilliseconds = event.end - event.start;
     let durationHours = Math.floor(durationMilliseconds / (1000 * 60 * 60));
     let durationMinutes = Math.floor((durationMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
+    let durationTotalHours = durationHours + (durationMinutes / 60);
 
-    hoursPerWeek[event.week].hours += durationHours;
-    hoursPerWeek[event.week].minutes += durationMinutes;
-
-    // Convertir les minutes excédentaires en heures si nécessaire
-    if (hoursPerWeek[event.week].minutes >= 60) {
-        let extraHours = Math.floor(hoursPerWeek[event.week].minutes / 60);
-        hoursPerWeek[event.week].hours += extraHours;
-        hoursPerWeek[event.week].minutes %= 60;
+    if (event.type === 'CM') {
+        weeklyHours[event.week].CM += durationTotalHours;
+    }
+    if (event.type === 'TD') {
+        weeklyHours[event.week].TD += durationTotalHours;
+    }
+    if (event.type === 'TP') {
+        weeklyHours[event.week].TP += durationTotalHours;
+    }
+    if (event.type === 'Autre') {
+        weeklyHours[event.week].Autre += durationTotalHours;
     }
 }
 
-// Convertir les objets hoursPerWeek en tableau pour l'affichage
-let chartData = Object.keys(hoursPerWeek).map(week => ({
-    name: week.toString(), // Convertir le numéro de semaine en chaîne pour le nom
-    y: hoursPerWeek[week].hours + (hoursPerWeek[week].minutes / 60) // Convertir les minutes en heures et les ajouter
-}));
+// Supposons que weeklyHours soit rempli avec vos données calculées.
 
-// Le reste du code pour l'affichage du graphique reste inchangé
-var chart = JSC.chart('chartDiv', {
-    debug: false,
-    defaultSeries_type: 'columnSolid',
-    title_label_text: 'Heures de cours par semaine en MMI',
-    yAxis: {
-        defaultTick_enabled: true,
-        scale_range_padding: 0.15
-    },
-    legend_visible: false,
-    toolbar_visible: false,
-    series: [
-        {
-            name: 'Heures de cours total',
-            color: 'turquoise',
-            defaultPoint: {
-                label: { text: '%value h' }
-            },
-            points: chartData
-        }
-    ]
-});
+var chart = JSC.chart('chartDiv', { 
+    debug: false, 
+    type: 'column', 
+    yAxis: { 
+      scale_type: 'stacked', 
+      label_text: 'Heures' // Changez cela pour afficher "Heures" au lieu de "Units Sold" si nécessaire
+    }, 
+    title_label_text: 'Heures par semaine', 
+    xAxis: { 
+      label_text: 'Semaine', 
+      categories: Object.keys(weeklyHours).sort((a, b) => a - b) // Tri des semaines
+    }, 
+    series: [ 
+      { 
+        name: 'TP', 
+        points: Object.values(weeklyHours).map(week => week.TP) 
+      }, 
+      { 
+        name: 'TD', 
+        points: Object.values(weeklyHours).map(week => week.TD) 
+      }, 
+      { 
+        name: 'CM', 
+        points: Object.values(weeklyHours).map(week => week.CM) 
+      }, 
+      { 
+        name: 'Autre', 
+        points: Object.values(weeklyHours).map(week => week.Autre) 
+      } 
+    ] 
+  });
+  
