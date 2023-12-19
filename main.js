@@ -33,26 +33,33 @@ let events = M.getEvents("mmi1");
 
 let hoursPerWeek = {};
 
-// Ajoutez les heures d'événements à l'objet
 for (let event of events) {
     if (!hoursPerWeek[event.week]) {
-        hoursPerWeek[event.week] = 0;
+        hoursPerWeek[event.week] = { hours: 0, minutes: 0 };
     }
 
     let durationMilliseconds = event.end - event.start;
     let durationHours = Math.floor(durationMilliseconds / (1000 * 60 * 60));
+    let durationMinutes = Math.floor((durationMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
 
-    hoursPerWeek[event.week] += durationHours;
+    hoursPerWeek[event.week].hours += durationHours;
+    hoursPerWeek[event.week].minutes += durationMinutes;
+
+    // Convertir les minutes excédentaires en heures si nécessaire
+    if (hoursPerWeek[event.week].minutes >= 60) {
+        let extraHours = Math.floor(hoursPerWeek[event.week].minutes / 60);
+        hoursPerWeek[event.week].hours += extraHours;
+        hoursPerWeek[event.week].minutes %= 60;
+    }
 }
 
-// Créez les points pour le graphique
-let chartPoints = Object.keys(hoursPerWeek).map(week => {
-    return {
-        name: week,
-        y: hoursPerWeek[week]
-    };
-});
+// Convertir les objets hoursPerWeek en tableau pour l'affichage
+let chartData = Object.keys(hoursPerWeek).map(week => ({
+    name: week.toString(), // Convertir le numéro de semaine en chaîne pour le nom
+    y: hoursPerWeek[week].hours + (hoursPerWeek[week].minutes / 60) // Convertir les minutes en heures et les ajouter
+}));
 
+// Le reste du code pour l'affichage du graphique reste inchangé
 var chart = JSC.chart('chartDiv', {
     debug: false,
     defaultSeries_type: 'columnSolid',
@@ -65,13 +72,12 @@ var chart = JSC.chart('chartDiv', {
     toolbar_visible: false,
     series: [
         {
-            name: 'Heures de cours',
+            name: 'Heures de cours total',
             color: 'turquoise',
             defaultPoint: {
                 label: { text: '%value' }
             },
-
-            points: chartPoints
+            points: chartData
         }
     ]
 });
