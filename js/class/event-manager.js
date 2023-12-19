@@ -51,7 +51,8 @@ class EventManager {
         return this.#events.map(event => {
             let obj = event.toObject();
             obj.calendarId = this.#id;
-            obj.week = event.week; // Ajoute la propriété week à l'objet retourné
+            obj.week = event.week;
+            obj.groups = event.groups;
             return obj;
         });
     }
