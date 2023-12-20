@@ -5,7 +5,7 @@ import { V } from "./js/view.js";
 await M.init();
 
 let all = M.filterByTag("week", 51);
-
+console.log(all)
 
 function renderTimes(events) {
     console.log(events)

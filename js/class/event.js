@@ -11,6 +11,7 @@ class Event {
     #duree;
     #semestre;
     #category;
+    #heurefin
 
     constructor(id, summary, description, start, end, location) {
         this.#id = id;
@@ -42,6 +43,8 @@ class Event {
 
         this.#semestre = this.getSemester(summary);
         this.#category = this.getCategory(summary);
+
+        this.#heurefin = this.getHeureFin();
     }
 
     get id() {
@@ -88,6 +91,10 @@ class Event {
         return this.#category;
     }
 
+    get heurefin() {
+        return this.#heurefin;
+    }
+
     // retourne un objet contenant les informations de l'événement
     // dans un format compatible avec Toast UI Calendar (voir https://nhn.github.io/tui.calendar/latest/EventObject)
     toObject() {
@@ -103,7 +110,8 @@ class Event {
             duree: this.#duree,
             semestre: this.#semestre,
             category: this.#category,
-            groups: this.#groups
+            groups: this.#groups,
+            heurefin: this.#heurefin
         }
     }
 
@@ -150,6 +158,17 @@ class Event {
         }
         return -1;
     }
+
+    getHeureFin() {
+        let time = this.#end.toISOString();
+        let match = time.match(/T(\d{2}):(\d{2})/);
+      
+        let hour = parseInt(match[1], 10);
+        let minute = parseInt(match[2], 10);
+        hour++;
+        let decimalTime = hour + (minute / 60);
+        return decimalTime.toFixed(2);
+    } 
 }
 
 export { Event };

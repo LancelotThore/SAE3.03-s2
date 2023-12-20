@@ -56,6 +56,8 @@ class EventManager {
             obj.duree = event.duree;
             obj.semestre = event.semestre;
             obj.category = event.category;
+            obj.heurefin = event.heurefin;
+            obj.end = event.end
             return obj;
         });
     }
