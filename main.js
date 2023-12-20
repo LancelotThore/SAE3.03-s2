@@ -4,115 +4,66 @@ import { V } from "./js/view.js";
 
 await M.init();
 
-let all = M.filterByTag("BUT1-G1");
+let all = M.filterByTag("week", 51);
+
 
 function renderTimes(events) {
-    let series = [];
-    let groupedBySemestre = {};
-
-    events.forEach(event => {
-        if (event.semestre === "-1" || event.category === -1) return;
-
-        if (!groupedBySemestre[event.semestre]) {
-            groupedBySemestre[event.semestre] = { Ressource: { CM: 0, TD: 0, TP: 0, Autre: 0 }, SAE: { CM: 0, TD: 0, TP: 0, Autre: 0 }, total: 0 };
-        }
-
-        groupedBySemestre[event.semestre][event.category][event.type] += event.duree;
-        groupedBySemestre[event.semestre].total += event.duree;
-    });
-
-    for (let semestre in groupedBySemestre) {
-        ['Ressource', 'SAE'].forEach(category => {
-            let data = groupedBySemestre[semestre][category];
-            let total_donnee = data.CM + data.TD + data.TP + data.Autre;
-            
-            series.push([
-                semestre,
-                category,
-                data.CM,
-                data.TD,
-                data.TP,
-                data.Autre,
-                total_donnee
-            ]);
-        });
-    }
-
+    console.log(events)
     var chart = JSC.chart('chartDiv', {
-        debug: true,
-        defaultSeries: { type: 'pieDonut', shape_center: '50%,50%' },
-        title: {
-          label: {
-            text: 'Horraire de cours par Groupe',
-            style_fontSize: 16
-          },
-          position: 'center'
-        },
-        defaultPoint: {
-          tooltip: '<b>%name</b><br>Heures: <b>%Valueh</b>'
-        },
-        legend: { template: '%value h %icon %name', position: 'right' },
-        series: [
-          {
-            name: '',
-            points: [
-              { x: 'S'+series[0][0], y: series[0][6]+series[1][6], legendEntry: { sortOrder: 1 } },
-              { x: 'S'+series[2][0], y: series[2][6]+series[3][6], legendEntry: { sortOrder: 3, lineAbove: true } },
-            ],
-            shape: { innerSize: '0%', size: '20%' },
-            defaultPoint_label: {
-              text: '<b>%name</b>',
-              placement: 'inside'
+            debug: true,
+            defaultSeries_type: 'column',
+            title_label_text: 'Fin des cours',
+            yAxis: { label_text: 'Heures' },
+            xAxis: {
+              label_text: 'Groupe',
+              categories: ['BUT1-G1', 'BUT1-G21', 'BUT1-G22', 'BUT1-G3', 'BUT2-G1', 'BUT2-G21', 'BUT2-G22', 'BUT2-G3', 'BUT3-G1', 'BUT3-G21', 'BUT3-G22', 'BUT3-G3']
             },
-            palette: ['#8D2C5A', '#006EA3']
-          },
-          {
-          name: '',
-            points: [
-              { x: 'Ressource S'+series[0][0], y: series[0][6], legendEntry: { sortOrder: 1 }, attributes_type: 'S'+series[0][0] },
-              { x: 'SAE S'+series[0][0], y: series[1][6], legendEntry: { sortOrder: 2 }, attributes_type: 'S'+series[0][0] },
-              { x: 'Ressource S'+series[2][0], y: series[2][6], legendEntry: { sortOrder: 3 }, attributes_type: 'S'+series[2][0] },
-              { x: 'SAE S'+series[2][0], y: series[3][6], legendEntry: { sortOrder: 4}, attributes_type: 'S'+series[2][0] },
-            ],
-            shape: { innerSize: '60%', size: '40%' },
-            defaultPoint_label: {
-              text: '<b>%name</b>',
-              placement: 'inside'
-            },
-            palette: ['#F4CFDF', '#CA3C66', '#9AC8EB', '#5784BA']
-          },
-          {
-            name: '',
-            points: [
-              { x: 'R - CM', y: series[0][2], legendEntry_sortOrder: 2, attributes_type: 'Ressource S'+series[0][0] },
-              { x: 'R - TD', y: series[0][3], legendEntry_sortOrder: 2, attributes_type: 'Ressource S'+series[0][0] },
-              { x: 'R - TP', y: series[0][4], legendEntry_sortOrder: 2, attributes_type: 'Ressource S'+series[0][0] },
-              { x: 'S - CM', y: series[1][2], legendEntry_sortOrder: 2, attributes_type: 'SAE S'+series[0][0] },
-              { x: 'S - TD', y: series[1][3], legendEntry_sortOrder: 2, attributes_type: 'SAE S'+series[0][0] },
-              { x: 'S - TP', y: series[1][4], legendEntry_sortOrder: 2, attributes_type: 'SAE S'+series[0][0] },
-              { x: 'S - Autonomie', y: series[1][5], legendEntry_sortOrder: 2, attributes_type: 'SAE S'+series[0][0] },
-              { x: 'R - CM', y: series[2][2], legendEntry_sortOrder: 4, attributes_type: 'Ressource S'+series[2][0] },
-              { x: 'R - TD', y: series[2][3], legendEntry_sortOrder: 4, attributes_type: 'Ressource S'+series[2][0] },
-              { x: 'R - TP', y: series[2][4], legendEntry_sortOrder: 4, attributes_type: 'Ressource S'+series[2][0] },
-              { x: 'S - CM', y: series[3][2], legendEntry_sortOrder: 4, attributes_type: 'SAE S'+series[2][0] },
-              { x: 'S - TD', y: series[3][3], legendEntry_sortOrder: 4, attributes_type: 'SAE S'+series[2][0] },
-              { x: 'S - TP', y: series[3][4], legendEntry_sortOrder: 4, attributes_type: 'SAE S'+series[2][0] },
-              { x: 'S - Autonomie', y: series[3][5], legendEntry_sortOrder: 4, attributes_type: 'SAE S'+series[2][0] },
-
-            ],
-            defaultPoint_tooltip: '<b>%name</b><br>Heures: <b>%Valueh</b>',
-            shape: { innerSize: '55%', size: '80%' },
-            palette: JSC.colorToPalette('#F4CFDF', { lightness: 0.4 }, 3, 0).concat(
-              JSC.colorToPalette('#CA3C66', { lightness: 0.4 }, 4, 0),
-              JSC.colorToPalette('#9AC8EB', { lightness: 0.4 }, 4, 0),
-              JSC.colorToPalette('#5784BA', { lightness: 0.4 }, 4, 0),
-            )
-          }
-        ]
-      });
+            series: [
+              {
+                name: 'Lundi ',
+                id: 's1',
+                points: [17, 16,19,19,14, 19, 19,18,19,19,19,19]
+              },
+              { name: 'Mardi', points: [19, 19,19,12,19, 19, 17,19,19,16,19,19] },
+              { name: 'Mercredi', points: [19, 19,19,17,19, 19, 19,19,19,19,11,19] },
+              { name: 'Jeudi', points: [19, 19,17,19,19, 19, 13,19,19,19,18,19] },
+              { name: 'Vendredi', points: [19, 19,19.5,19,19, 19, 17.5,19,19,19,19,19] }
+            ]
+    });
 }
 
-renderTimes(all)
+function getDernierCours(events) {
+    let cours = {};
+    let allGroups = new Set(); // Utiliser un ensemble pour stocker des groupes uniques
+
+    events.forEach(event => {
+        let date = new Date(event.start).toLocaleDateString();
+        if (!cours[date]) {
+            cours[date] = {};
+        }
+        event.groups.forEach(group => {
+            allGroups.add(group); // Ajouter le groupe à l'ensemble
+            let groupEndTime = new Date(event.end).toLocaleTimeString();
+            if (!cours[date][group] || groupEndTime > cours[date][group]) {
+                cours[date][group] = groupEndTime;
+            }
+        });
+    });
+
+    // Convertir l'objet cours en tableau
+    let tab = [];
+    for (let date in cours) {
+        let row = [date];
+        allGroups.forEach(group => {
+            row.push(cours[date][group] || "-"); // Si l'heure de fin pour le groupe n'existe pas, ajoutez un tiret
+        });
+        tab.push(row);
+    }
+
+    renderTimes(tab);
+}
+
+getDernierCours(all)
 
 function handlerClick(ev) {
     if (ev.target.id == 'group') {
@@ -121,9 +72,15 @@ function handlerClick(ev) {
             result = all;
         }
         else {
-            result = M.filterByTag(ev.target.value);
+            result = M.filterByTag("group", ev.target.value);
         }
         renderTimes(result);
+    }
+
+    if (ev.target.id == 'week') {
+        let result;
+        result = M.filterByTag("week", ev.target.value);
+        getDernierCours(result);
     }
 }
 

@@ -102,7 +102,8 @@ class Event {
             week: this.#week,
             duree: this.#duree,
             semestre: this.#semestre,
-            category: this.#category
+            category: this.#category,
+            groups: this.#groups
         }
     }
 

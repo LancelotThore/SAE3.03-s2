@@ -16,10 +16,10 @@ M.getEvents = function(annee) {
     return null;
 }
 
-M.filterByTag = function(tag) {
-    let A1 = Events.mmi1.filterEvents(tag);
-    let A2 = Events.mmi2.filterEvents(tag);
-    let A3 = Events.mmi3.filterEvents(tag);
+M.filterByTag = function(crit, tag) {
+    let A1 = Events.mmi1.filterEvents(crit, tag);
+    let A2 = Events.mmi2.filterEvents(crit, tag);
+    let A3 = Events.mmi3.filterEvents(crit, tag);
     let result = [...A1, ...A2, ...A3];
     return result;
 }

@@ -60,9 +60,15 @@ class EventManager {
         });
     }
 
-    filterEvents(value) {
+    filterEvents(critere, value) {
         let res;
-        res = this.#events.filter(event => event.groups.includes(value));
+
+        if (critere === 'group') {
+            res = this.#events.filter(event => event.groups.includes(value));
+        }
+        else if (critere === 'week') {
+            res = this.#events.filter(event => event.week === value);
+        }
 
         return res.map(event => {
             let obj = event.toObject();
