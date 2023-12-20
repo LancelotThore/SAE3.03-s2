@@ -4,8 +4,7 @@ import { V } from "./js/view.js";
 
 await M.init();
 
-let all = [...M.getEvents("mmi1")];
-console.log(all)
+let all = M.filterByTag("BUT1-G1");
 
 function renderTimes(events) {
     let series = [];
@@ -41,8 +40,6 @@ function renderTimes(events) {
         });
     }
 
-    console.log(series)
-
     var chart = JSC.chart('chartDiv', {
         debug: true,
         defaultSeries: { type: 'pieDonut', shape_center: '50%,50%' },
@@ -56,7 +53,7 @@ function renderTimes(events) {
         defaultPoint: {
           tooltip: '<b>%name</b><br>Heures: <b>%Valueh</b>'
         },
-        legend: { template: '{%value:c2}B %icon %name', position: 'right' },
+        legend: { template: '%value h %icon %name', position: 'right' },
         series: [
           {
             name: '',
@@ -107,7 +104,7 @@ function renderTimes(events) {
             ],
             defaultPoint_tooltip: '<b>%name</b><br>Heures: <b>%Valueh</b>',
             shape: { innerSize: '55%', size: '80%' },
-            palette: JSC.colorToPalette('#F4CFDF', { lightness: 0.4 }, 4, 0).concat(
+            palette: JSC.colorToPalette('#F4CFDF', { lightness: 0.4 }, 3, 0).concat(
               JSC.colorToPalette('#CA3C66', { lightness: 0.4 }, 4, 0),
               JSC.colorToPalette('#9AC8EB', { lightness: 0.4 }, 4, 0),
               JSC.colorToPalette('#5784BA', { lightness: 0.4 }, 4, 0),
