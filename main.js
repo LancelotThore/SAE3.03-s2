@@ -8,9 +8,8 @@ let all = M.filterByTag("BUT1-G1");
 
 function renderTimes(events) {
     let series = [];
-
-    // Grouper les événements par semestre
     let groupedBySemestre = {};
+
     events.forEach(event => {
         if (event.semestre === "-1" || event.category === -1) return;
 
@@ -22,7 +21,6 @@ function renderTimes(events) {
         groupedBySemestre[event.semestre].total += event.duree;
     });
 
-    // Créer le tableau series
     for (let semestre in groupedBySemestre) {
         ['Ressource', 'SAE'].forEach(category => {
             let data = groupedBySemestre[semestre][category];
@@ -45,7 +43,7 @@ function renderTimes(events) {
         defaultSeries: { type: 'pieDonut', shape_center: '50%,50%' },
         title: {
           label: {
-            text: 'Horraire de cours',
+            text: 'Horraire de cours par Groupe',
             style_fontSize: 16
           },
           position: 'center'
