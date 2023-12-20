@@ -138,7 +138,7 @@ class Event {
     getCategory(title) {
         let regexp = /^(R|(SAÉ?))[EÉ ]{0,2}([1-6]\.[0-9]{2})/;
         let res = title.match(regexp);
-    
+
         if (res != null) {
             if (res[1] === "R") {
                 return "Ressource";
@@ -148,7 +148,7 @@ class Event {
             }
         }
         return -1;
-    }    
+    }
 }
 
 export { Event };
