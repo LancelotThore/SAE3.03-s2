@@ -75,6 +75,11 @@ function renderTimes(events) {
               { x: 'SAE S'+series[2][0], y: series[3][6], legendEntry: { sortOrder: 4}, attributes_type: 'S'+series[2][0] },
             ],
             shape: { innerSize: '60%', size: '40%' },
+            defaultPoint: {
+                label_text: '<b>%name</b> ',
+                outline: { color: 'white', width: 5 }
+                
+            },
             defaultPoint_label: {
               text: '<b>%name</b>',
               placement: 'inside'
@@ -100,7 +105,10 @@ function renderTimes(events) {
               { x: 'S - Autonomie', y: series[3][5], legendEntry_sortOrder: 4, attributes_type: 'SAE S'+series[2][0] },
 
             ],
-            defaultPoint_tooltip: '<b>%name</b><br>Heures: <b>%Valueh</b>',
+            defaultPoint: {
+                label_text: '<b>%name</b> ',
+                outline: { color: 'white', width: 3 }
+            },
             shape: { innerSize: '55%', size: '80%' },
             palette: JSC.colorToPalette('#F4CFDF', { lightness: 0.4 }, 3, 0).concat(
               JSC.colorToPalette('#CA3C66', { lightness: 0.4 }, 4, 0),
