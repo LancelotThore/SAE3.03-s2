@@ -20,14 +20,12 @@ function renderTimes(events) {
             },
             series: [
               {
-                name: 'Lundi ',
-                id: 's1',
-                points: [17, 16,19,19,14, 19, 19,18,19,19,19,19]
+                name: 'Lundi '+events[0][0], points: [17, 16,19,19,14, 19, 19,18,19,19,19,19]
               },
-              { name: 'Mardi', points: [19, 19,19,12,19, 19, 17,19,19,16,19,19] },
-              { name: 'Mercredi', points: [19, 19,19,17,19, 19, 19,19,19,19,11,19] },
-              { name: 'Jeudi', points: [19, 19,17,19,19, 19, 13,19,19,19,18,19] },
-              { name: 'Vendredi', points: [19, 19,19.5,19,19, 19, 17.5,19,19,19,19,19] }
+              { name: 'Mardi '+events[1][0], points: [19, 19,19,12,19, 19, 17,19,19,16,19,19] },
+              { name: 'Mercredi '+events[2][0], points: [19, 19,19,17,19, 19, 19,19,19,19,11,19] },
+              { name: 'Jeudi '+events[3][0], points: [19, 19,17,19,19, 19, 13,19,19,19,18,19] },
+              { name: 'Vendredi '+events[4][0], points: [19, 19,19.5,19,19, 19, 17.5,19,19,19,19,19] }
             ]
     });
 }
@@ -55,7 +53,7 @@ function getDernierCours(events) {
     for (let date in cours) {
         let row = [date];
         allGroups.forEach(group => {
-            row.push(cours[date][group] || "-"); // Si l'heure de fin pour le groupe n'existe pas, ajoutez un tiret
+            row.push(cours[date][group] || "0");
         });
         tab.push(row);
     }
