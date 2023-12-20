@@ -135,19 +135,20 @@ class Event {
         return -1;
     }
 
-    getCategory = function (title) {
+    getCategory(title) {
         let regexp = /^(R|(SAÉ?))[EÉ ]{0,2}([1-6]\.[0-9]{2})/;
         let res = title.match(regexp);
     
         if (res != null) {
-            if (res[1]) {
+            if (res[1] === "R") {
                 return "Ressource";
-            } else if (res[2]) {
+            }
+            else if (res[2] === "SAÉ") {
                 return "SAE";
             }
         }
         return -1;
-    }       
+    }    
 }
 
 export { Event };
