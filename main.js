@@ -69,7 +69,7 @@ function render(grp) {
     });
 
     var chart3 = JSC.chart('chartDiv3', {
-        debug: true,
+        debug: false,
         defaultSeries: { type: 'pieDonut', shape_center: '50%,50%' },
         title: {
           label: {

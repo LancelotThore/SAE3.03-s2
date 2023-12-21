@@ -65,3 +65,13 @@
     color: #7b38D8;
     transition: 200ms;
 }
+
+@media (max-width: 86rem) {
+    .w-50 {
+        width: 100%;
+    }
+
+    .w-30 {
+        width: 100%;
+    }
+}
