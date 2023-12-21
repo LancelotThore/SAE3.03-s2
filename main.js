@@ -11,7 +11,7 @@ function renderTimes(data) {
     var chart = JSC.chart('chartDiv', {
         debug: false,
         type: 'line',
-        legend_visible: true,
+        legend_visible: false,
         xAxis: {
             crosshair_enabled: true,
             scale: { type: 'time' }
@@ -74,8 +74,13 @@ function handlerClick(ev) {
 
     if(ev.target.id == 'day') {
         let result;
-        result = M.filterByTag("day", ev.target.value);
-        getDernierCours(result);
+        if (ev.target.value == "tout") {
+            getDernierCours(all);
+        }
+        else {
+            result = M.filterByTag("day", ev.target.value);
+            getDernierCours(result);
+        }
     }
 }
 

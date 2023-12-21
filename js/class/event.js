@@ -44,6 +44,8 @@ class Event {
         this.#category = this.getCategory(summary);
 
         this.#heurefin = Number(this.getHeureFin());
+
+        this.#day = this.getDay(end);
     }
 
     get id() {
@@ -180,13 +182,13 @@ class Event {
 
         let hour = parseInt(match[1], 10);
         let minute = parseInt(match[2], 10);
-        hour += 2;
+
         let decimalTime = hour + (minute / 60);
         return decimalTime.toFixed(2);
     }
 
     getDay(dateString) {
-        const daysOfWeek = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
+        const daysOfWeek = ['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         return daysOfWeek[new Date(dateString).getDay()];
     }
 }
