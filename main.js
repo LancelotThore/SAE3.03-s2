@@ -43,7 +43,7 @@ function renderTimes(events) {
         defaultSeries: { type: 'pieDonut', shape_center: '50%,50%' },
         title: {
           label: {
-            text: 'Horraire de cours par Groupe',
+            text: 'Heures de cours par Groupe',
             style_fontSize: 16
           },
           position: 'center'
