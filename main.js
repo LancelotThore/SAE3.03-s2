@@ -9,7 +9,7 @@ console.log(all)
 
 function renderTimes(data) {
     var chart = JSC.chart('chartDiv', {
-        debug: true,
+        debug: false,
         type: 'line',
         legend_visible: true,
         xAxis: {
@@ -31,56 +31,31 @@ function renderTimes(data) {
     });
 }
 
-function formatDataForChart(data) {
-    let formattedData = [];
-
-    data.forEach(groupData => {
-        let groupName = groupData[0];
-        let points = [];
-
-        for (let i = 1; i < groupData.length; i++) {
-            let date = groupData[i][0];
-            let value = groupData[i][1];
-            points.push([date, value]);
-        }
-
-        formattedData.push({
-            name: groupName,
-            points: points
-        });
-    });
-
-    renderTimes(formattedData);
-}
-
 function getDernierCours(events) {
     let groupedEvents = {};
 
     events.forEach(event => {
         event.groups.forEach(group => {
-            if (!groupedEvents[group]) {
-                groupedEvents[group] = {};
-            }
             let date = new Date(event.start);
             let formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-            let decimalEndTime = parseFloat(event.heurefin);
-            if (!groupedEvents[group][formattedDate] || decimalEndTime > groupedEvents[group][formattedDate]) {
+            let decimalEndTime = event.heurefin;
+
+            if (groupedEvents[group] == undefined) {
+                groupedEvents[group] = {};
+            }
+
+            if (groupedEvents[group][formattedDate] == undefined || decimalEndTime > groupedEvents[group][formattedDate]) {
                 groupedEvents[group][formattedDate] = decimalEndTime;
             }
         });
     });
 
-    let tab = [];
-    for (let group in groupedEvents) {
-        let groupData = [group];
-        for (let date in groupedEvents[group]) {
-            groupData.push([date, groupedEvents[group][date]]);
-        }
-        tab.push(groupData);
-    }
+    let formattedData = Object.keys(groupedEvents).map(group => ({
+        name: group,
+        points: Object.entries(groupedEvents[group]).map(([date, value]) => [date, value])
+    }));
 
-    console.log(tab)
-    formatDataForChart(tab)
+    renderTimes(formattedData);
 }
 
 getDernierCours(all)
@@ -97,9 +72,9 @@ function handlerClick(ev) {
         renderTimes(result);
     }
 
-    if (ev.target.id == 'week') {
+    if(ev.target.id == 'day') {
         let result;
-        result = M.filterByTag("week", ev.target.value);
+        result = M.filterByTag("day", ev.target.value);
         getDernierCours(result);
     }
 }

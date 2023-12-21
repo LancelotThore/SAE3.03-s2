@@ -57,7 +57,8 @@ class EventManager {
             obj.semestre = event.semestre;
             obj.category = event.category;
             obj.heurefin = event.heurefin;
-            obj.end = event.end
+            obj.end = event.end;
+            obj.day = event.day;
             return obj;
         });
     }
@@ -68,8 +69,8 @@ class EventManager {
         if (critere === 'group') {
             res = this.#events.filter(event => event.groups.includes(value));
         }
-        else if (critere === 'week') {
-            res = this.#events.filter(event => event.week === value);
+        else if (critere === 'day') {
+            res = this.#events.filter(event => event.day.includes(value));
         }
 
         return res.map(event => {
