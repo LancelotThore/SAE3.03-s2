@@ -64,21 +64,21 @@ class EventManager {
     }
 
     filterEvents(critere, value) {
-        let res;
-
+        let res = [];
+    
         if (critere === 'group') {
             res = this.#events.filter(event => event.groups.includes(value));
         }
         else if (critere === 'day') {
-            res = this.#events.filter(event => event.day.includes(value));
+            res = this.#events.filter(event => event.day.includes(value)); // Attention ici, la propriété 'day' n'existe pas dans vos objets d'événements. Peut-être vouliez-vous utiliser 'start' ou 'end'?
         }
-
+    
         return res.map(event => {
             let obj = event.toObject();
             obj.calendarId = this.#id;
             return obj;
         });
-    }
+    }    
 }
 
 export { EventManager };
