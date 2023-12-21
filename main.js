@@ -5,7 +5,6 @@ import { V } from "./js/view.js";
 await M.init();
 
 let all = [...M.getEvents("mmi1"), ...M.getEvents('mmi2'), ...M.getEvents("mmi3")];
-console.log(all)
 
 function renderTimes(data) {
     var chart = JSC.chart('chartDiv', {
