@@ -60,6 +60,11 @@ function renderTimes(events) {
               { x: 'S'+series[2][0], y: series[2][6]+series[3][6], legendEntry: { sortOrder: 3, lineAbove: true } },
             ],
             shape: { innerSize: '0%', size: '20%' },
+            defaultPoint: {
+                label_text: '<b>%name</b> ',
+                outline: { color: 'white', width: 5 }
+                
+            },
             defaultPoint_label: {
               text: '<b>%name</b>',
               placement: 'inside'
