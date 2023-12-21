@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./CSS/style.css">
+    <title>SAE 303 - sprint 2</title>
+</head>
+
+<body>
+    <h1 class="title">Dash Board</h1>
+    <main class="all" id="widgetsWrapper">
+        <select class="select" name="day" id="day">
+            <option selected value="tout">Tout</option>
+            <option value="Mon">Lundi</option>
+            <option value="Tue">Mardi</option>
+            <option value="Wed">Mercredi</option>
+            <option value="Thu">Jeudi</option>
+            <option value="Fri">Vendredi</option>
+        </select>
+        <div id="chartDiv4" class="chartDiv"></div>
+        <div id="chartDiv1" class="chartDiv w-50"></div>
+        <div id="chartDiv2" class="chartDiv w-50"></div>
+        <select class="select" name="group" id="group">
+            <option selected class="mmi1" value="BUT1-G1">BUT1 - G1</option>
+            <option class="mmi1" value="BUT1-G21">BUT1 - G21</option>
+            <option class="mmi1" value="BUT1-G22">BUT1 - G22</option>
+            <option class="mmi1" value="BUT1-G3">BUT1 - G3</option>
+
+            <option class="mmi2" value="BUT2-G1">BUT2 - G1</option>
+            <option class="mmi2" value="BUT2-G21">BUT2 - G21</option>
+            <option class="mmi2" value="BUT2-G22">BUT2 - G22</option>
+            <option class="mmi2" value="BUT2-G3">BUT2 - G3</option>
+
+            <option class="mmi3" value="BUT3-G1">BUT3 - G1</option>
+            <option class="mmi3" value="BUT3-G21">BUT3 - G21</option>
+            <option class="mmi3" value="BUT3-G22">BUT3 - G22</option>
+            <option class="mmi3" value="BUT3-G3">BUT3 - G3</option>
+        </select>
+        <div id="chartDiv3" class="chartDiv w-30"></div>
+    </main>
+</body>
+
+<script type="module" src="./main.js"></script>
+
+</html>
