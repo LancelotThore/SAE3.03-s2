@@ -8,11 +8,11 @@ await M.init();
 let all = [...M.getEvents("mmi1"), ...M.getEvents('mmi2'), ...M.getEvents("mmi3")]
 let grop = groupCategory(M.filterByTag("group", "BUT1-G1"));
 
-function render(grp) {
+function render(grp, day) {
     let chartData = heuresSemaine(all);
     let weeklyHours = heuresSemaineType(all);
     let series = grp;
-    let formattedData = getDernierCours(all);
+    let formattedData = getDernierCours(day);
 
     var chart1 = JSC.chart('chartDiv1', {
         debug: false,
@@ -177,7 +177,8 @@ function render(grp) {
     });
 }
 
-render(grop)
+render(grop, all)
+
 // it 1
 
 function heuresSemaine(events) {
@@ -299,13 +300,18 @@ function getDernierCours(events) {
 function handlerClick(ev) {
     if (ev.target.id == 'group') {
         let result = groupCategory(M.filterByTag("group", ev.target.value));
-        render(result) ;
+        render(result, all) ;
     }
 
-    if (ev.target.id == 'day') {
+    if(ev.target.id == 'day') {
         let result;
-        result = M.filterByTag("day", ev.target.value);
-        getDernierCours(result);
+        if (ev.target.value == "tout") {
+            result = all;
+        }
+        else {
+            result = M.filterByTag("day", ev.target.value);
+        }
+        render(grop, result);
     }
 }
 

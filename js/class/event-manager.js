@@ -64,21 +64,21 @@ class EventManager {
     }
 
     filterEvents(critere, value) {
-        let res = [];
-    
+        let res;
+
         if (critere === 'group') {
             res = this.#events.filter(event => event.groups.includes(value));
         }
         else if (critere === 'day') {
             res = this.#events.filter(event => event.day.includes(value));
         }
-    
+
         return res.map(event => {
             let obj = event.toObject();
             obj.calendarId = this.#id;
             return obj;
         });
-    }    
+    }
 }
 
 export { EventManager };
