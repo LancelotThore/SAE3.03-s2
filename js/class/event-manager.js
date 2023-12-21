@@ -70,7 +70,7 @@ class EventManager {
             res = this.#events.filter(event => event.groups.includes(value));
         }
         else if (critere === 'day') {
-            res = this.#events.filter(event => event.day.includes(value)); // Attention ici, la propriété 'day' n'existe pas dans vos objets d'événements. Peut-être vouliez-vous utiliser 'start' ou 'end'?
+            res = this.#events.filter(event => event.day.includes(value));
         }
     
         return res.map(event => {

@@ -176,6 +176,7 @@ function render(grp) {
         series: formattedData
     });
 }
+
 render(grop)
 // it 1
 
