@@ -21,9 +21,7 @@ class Event {
         this.#end = new Date(end);
         this.#location = location;
 
-        this.#groups = summary.slice(summary.lastIndexOf(',') + 1);
-        this.#groups = this.#groups.split('.');
-        this.#groups = this.#groups.map(gr => gr.replace(/\s/g, ""));
+        this.#groups = this.getGroups(summary);
 
         this.#week = this.calculateWeek();
         this.#duree = this.calculateDuree();
@@ -44,7 +42,7 @@ class Event {
         this.#semestre = this.getSemester(summary);
         this.#category = this.getCategory(summary);
 
-        this.#heurefin = this.getHeureFin();
+        this.#heurefin = Number(this.getHeureFin());
     }
 
     get id() {
@@ -115,6 +113,17 @@ class Event {
         }
     }
 
+    getGroups(summary) {
+        let groups = summary.slice(summary.lastIndexOf(',') + 1);
+        groups = groups.split('.');
+        groups = groups.map(gr => gr.replace(/\s/g, ""));
+
+        // Filtrer et valider les groupes
+        groups = groups.filter(gr => /^BUT[1-3]-G\d{1,2}$/.test(gr) && gr !== 'BUT1-G41' && gr !== 'BUT1-G42');
+
+        return groups;
+    }
+
     calculateWeek() {
         var date = new Date(this.#start.getTime());
         date.setHours(0, 0, 0, 0);
@@ -162,13 +171,13 @@ class Event {
     getHeureFin() {
         let time = this.#end.toISOString();
         let match = time.match(/T(\d{2}):(\d{2})/);
-      
+
         let hour = parseInt(match[1], 10);
         let minute = parseInt(match[2], 10);
-        hour++;
+        hour += 2;
         let decimalTime = hour + (minute / 60);
         return decimalTime.toFixed(2);
-    } 
+    }
 }
 
 export { Event };
