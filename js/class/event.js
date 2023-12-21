@@ -21,9 +21,7 @@ class Event {
         this.#start = new Date(start);
         this.#end = new Date(end);
         this.#location = location;
-
         this.#groups = this.getGroups(summary);
-
         this.#week = this.calculateWeek();
         this.#duree = this.calculateDuree();
 
@@ -42,9 +40,7 @@ class Event {
 
         this.#semestre = this.getSemester(summary);
         this.#category = this.getCategory(summary);
-
         this.#heurefin = Number(this.getHeureFin());
-
         this.#day = this.getDay();
     }
 
