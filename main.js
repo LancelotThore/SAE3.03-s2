@@ -4,7 +4,7 @@ import { V } from "./js/view.js";
 
 await M.init();
 
-let all = [...M.getEvents("mmi1"), ...M.getEvents('mmi2'), ...M.getEvents("mmi3")]
+let all = [...M.getEvents("mmi1"), ...M.getEvents('mmi2'), ...M.getEvents("mmi3")];
 console.log(all)
 
 function renderTimes(data) {
@@ -75,12 +75,12 @@ function handlerClick(ev) {
     if(ev.target.id == 'day') {
         let result;
         if (ev.target.value == "tout") {
-            getDernierCours(all);
+            result = all;
         }
         else {
             result = M.filterByTag("day", ev.target.value);
-            getDernierCours(result);
         }
+        getDernierCours(result);
     }
 }
 
