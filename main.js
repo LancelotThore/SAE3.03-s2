@@ -8,6 +8,9 @@ await M.init();
 let all = [...M.getEvents("mmi1"), ...M.getEvents('mmi2'), ...M.getEvents("mmi3")]
 let grop = groupCategory(M.filterByTag("group", "BUT1-G1"));
 
+sessionStorage.setItem("group", "BUT1-G1");
+sessionStorage.setItem("day", "tout");
+
 function render(grp, day) {
     let chartData = heuresSemaine(all);
     let weeklyHours = heuresSemaineType(all);
@@ -299,20 +302,13 @@ function getDernierCours(events) {
 
 function handlerClick(ev) {
     if (ev.target.id == 'group') {
-        let result = groupCategory(M.filterByTag("group", ev.target.value));
-        render(result, all) ;
+        sessionStorage.setItem("group", ev.target.value);
     }
 
     if(ev.target.id == 'day') {
-        let result;
-        if (ev.target.value == "tout") {
-            result = all;
-        }
-        else {
-            result = M.filterByTag("day", ev.target.value);
-        }
-        render(grop, result);
+        sessionStorage.setItem("day", ev.target.value);
     }
+    render(groupCategory(M.filterByTag("group", sessionStorage.getItem("group"))), M.filterByTag("day", sessionStorage.getItem("day")));
 }
 
 export { handlerClick };

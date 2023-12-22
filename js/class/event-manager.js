@@ -70,7 +70,12 @@ class EventManager {
             res = this.#events.filter(event => event.groups.includes(value));
         }
         else if (critere === 'day') {
-            res = this.#events.filter(event => event.day.includes(value));
+            if (value == "tout") {
+                res = this.#events;
+            }
+            else {
+                res = this.#events.filter(event => event.day.includes(value));
+            }
         }
 
         return res.map(event => {
